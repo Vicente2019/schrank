@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require("mongoose");
+const morgan = require('morgan');
 const app = express();
 const port = 3000;
+const outfitsRoutes = require('./routes/outfits');
 
 mongoose.connect("mongodb://localhost:27017/schrank")
     .then(() => {
@@ -9,6 +11,9 @@ mongoose.connect("mongodb://localhost:27017/schrank")
     }).catch((error) => {
         console.log("Error connecting to MongoDB: ", error);
     });
+
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 app.get('/', (req, res) => {
     res.send("Schrank!!");
@@ -18,17 +23,7 @@ app.get('/closet', (req, res) => {
     res.send("All the items should be here.");
 });
 
-app.get("/outfits", (req, res) => {
-    res.send("Page with outfits should be here");
-});
-
-app.get("/outfits/new", (req, res) => {
-    res.send("Form for new outfit");
-});
-
-app.get("/outfits/:id", (req, res) => {
-    res.send("Single outfit page");
-});
+app.use('/outfits', outfitsRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
