@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const app = express();
 const port = 3000;
 const outfitsRoutes = require('./routes/outfits');
+const itemsRoutes = require('./routes/items');
 
 mongoose.connect("mongodb://localhost:27017/schrank")
     .then(() => {
@@ -24,6 +25,7 @@ app.get('/closet', (req, res) => {
 });
 
 app.use('/outfits', outfitsRoutes);
+app.use('/items', itemsRoutes);
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
