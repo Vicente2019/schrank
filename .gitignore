@@ -1,0 +1,15 @@
+# Node
+node_modules
+dist
+
+# OS
+.DS_Store
+
+# Env
+.env
+
+# Logs
+*.log
+
+# TS
+*.tsbuildinfo
