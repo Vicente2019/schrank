@@ -1,5 +1,6 @@
 import express from 'express';
 import itemRoutes from "./routes/items";
+import outfitRoutes from "./routes/outfits";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -7,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 app.use("/api/items", itemRoutes);
+app.use("/api/outfits", outfitRoutes);
 
 app.get('/', (req, res) => {
   res.send('Backend is running 🚀');
