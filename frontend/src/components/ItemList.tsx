@@ -13,7 +13,7 @@ export default function ItemList() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/items")
+    fetch("http://localhost:5050/api/items")
       .then((res) => res.json())
       .then((data) => {
         setItems(data);

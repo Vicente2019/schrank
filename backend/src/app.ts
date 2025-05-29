@@ -1,10 +1,25 @@
 import express from 'express';
 import itemRoutes from "./routes/items";
 import outfitRoutes from "./routes/outfits";
+import cors from "cors";
+import mongoose from 'mongoose';
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5050;
 
+mongoose.connect("mongodb://localhost:27017/schrank");
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+  console.log("Database connected");
+});
+
+app.use(cors({
+  origin: "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+})); 
 app.use(express.json());
 
 app.use("/api/items", itemRoutes);
