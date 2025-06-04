@@ -1,37 +1,34 @@
 import { useEffect, useState } from "react";
+import { Item } from "../types/item";
 
-type Item = {
-  _id: string;
-  name: string;
-  category: string;
-  color?: string;
-  tags: string[];
+type Props = {
+  items: Item[];
 };
 
-export default function ItemList() {
-  const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("http://localhost:5050/api/items")
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) return <p>Loading...</p>;
-
+export default function ItemList({ items }: Props) {
   return (
     <div>
-      <ul>
-        {items.map((item) => (
-          <li key={item._id}>
-            {item.name} - {item.category} {item.color && `(${item.color})`}
-          </li>
-        ))}
-      </ul>
+      {items.map((item) => (
+        <div key={item._id}>
+          {item.imageUrl && (
+            <img src={item.imageUrl} alt={item.name} width={200} />
+          )}
+          <h2>{item.name}</h2>
+          <p>Category: {item.category}</p>
+          {item.brand && <p>Brand: {item.brand}</p>}
+          {item.size && <p>Size: {item.size}</p>}
+          {item.color && <p>Color: {item.color}</p>}
+          {item.price !== undefined && <p>Price: ${item.price.toFixed(2)}</p>}
+          {item.tags?.length > 0 && (
+            <div>
+              Tags:{" "}
+              {item.tags.map((tag) => (
+                <span key={tag}>#{tag} </span>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
     </div>
   );
 }
