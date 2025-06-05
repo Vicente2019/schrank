@@ -7,7 +7,6 @@ function App() {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch items once on mount
   useEffect(() => {
     fetch("http://localhost:5050/api/items")
       .then((res) => res.json())
@@ -24,10 +23,13 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <ItemForm onAdd={handleAdd} />
-      <h1>My Items</h1>
-      {loading ? <p>Loading...</p> : <ItemList items={items} />}
+    <div className="p-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="col-span-1 sm:col-span-2 lg:col-span-2 row-span-2 bg-white shadow rounded-xl p-6 border border-gray-200">
+          <ItemForm onAdd={handleAdd} />
+        </div>
+        {loading ? <p>Loading...</p> : <ItemList items={items} />}
+      </div>
     </div>
   );
 }
