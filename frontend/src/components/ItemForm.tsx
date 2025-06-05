@@ -69,11 +69,27 @@ export default function ItemForm({ onAdd }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div><label>Name: <input name="name" required value={formData.name} onChange={handleChange} /></label></div>
-      <div>
-        <label>Category: 
-          <select name="category" value={formData.category} onChange={handleChange}>
+    <form onSubmit={handleSubmit} className="bg-white p-6 space-y-4 w-full">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Name</label>
+          <input
+            name="name"
+            required
+            value={formData.name}
+            onChange={handleChange}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2 bg-neutral-50"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-800 bg-neutral-50 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
+          >
             <option>top</option>
             <option>bottom</option>
             <option>shoes</option>
@@ -81,22 +97,88 @@ export default function ItemForm({ onAdd }: Props) {
             <option>outerwear</option>
             <option>other</option>
           </select>
-        </label>
-      </div>
-      <div><label>Color: <input name="color" value={formData.color} onChange={handleChange} /></label></div>
-      <div><label>Image URL: <input name="imageUrl" value={formData.imageUrl} onChange={handleChange} /></label></div>
-      <div><label>Tags (comma-separated): <input name="tags" value={formData.tags} onChange={handleChange} /></label></div>
-      <div><label>Price: <input name="price" type="number" value={formData.price} onChange={handleChange} /></label></div>
-      <div>
-        <label>Size:
-          <select name="size" value={formData.size} onChange={handleChange}>
-            <option>XS</option><option>S</option><option>M</option><option>L</option><option>XL</option>
-            <option>XXL</option><option>One Size</option><option>Custom</option><option>Unknown</option>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Color</label>
+          <input
+            name="color"
+            value={formData.color}
+            onChange={handleChange}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Image URL</label>
+          <input
+            name="imageUrl"
+            value={formData.imageUrl}
+            onChange={handleChange}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Tags (comma-separated)</label>
+          <input
+            name="tags"
+            value={formData.tags}
+            onChange={handleChange}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Price</label>
+          <input
+            name="price"
+            type="number"
+            value={formData.price}
+            onChange={handleChange}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Size</label>
+          <select
+            name="size"
+            value={formData.size}
+            onChange={handleChange}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
+          >
+            <option>XS</option>
+            <option>S</option>
+            <option>M</option>
+            <option>L</option>
+            <option>XL</option>
+            <option>XXL</option>
+            <option>One Size</option>
+            <option>Custom</option>
+            <option>Unknown</option>
           </select>
-        </label>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Brand</label>
+          <input
+            name="brand"
+            value={formData.brand}
+            onChange={handleChange}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
+          />
+        </div>
       </div>
-      <div><label>Brand: <input name="brand" value={formData.brand} onChange={handleChange} /></label></div>
-      <button type="submit">Add Item</button>
+
+      <div className="pt-4">
+        <button
+          type="submit"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition"
+        >
+          Add Item
+        </button>
+      </div>
     </form>
   );
 }
