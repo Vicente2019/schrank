@@ -11,7 +11,7 @@ export default function ItemFormCard({ onAdd }: Props) {
   return (
     <div
       className={`bg-white border rounded-xl shadow-sm p-4 transition-all duration-300 ease-in-out 
-      ${expanded ? 'col-span-1 sm:col-span-2 lg:col-span-2 lg:row-span-2' : 'h-40 flex items-center justify-center cursor-pointer'}`}
+      ${expanded ? 'col-span-1 sm:col-span-2 lg:col-span-2 lg:row-span-2' : 'flex items-center justify-center cursor-pointer'}`}
       onClick={() => !expanded && setExpanded(true)}
     >
       {!expanded ? (
