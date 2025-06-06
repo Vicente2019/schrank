@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import ItemForm from "./ItemForm";
 
 type Props = {
-  onAdd: () => void;
+  refreshItems: () => void;
 };
 
-export default function ItemFormCard({ onAdd }: Props) {
+export default function ItemFormCard({ refreshItems }: Props) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -36,8 +36,8 @@ export default function ItemFormCard({ onAdd }: Props) {
             </button>
           </div>
           <ItemForm
-            onAdd={() => {
-              onAdd();
+            refreshItems={() => {
+              refreshItems();
               setExpanded(false);
             }}
           />

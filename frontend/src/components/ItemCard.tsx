@@ -2,11 +2,27 @@ import { Item } from "../types/item";
 
 type Props = {
   item: Item;
+  refreshItems: () => void;
 };
 
-export default function ItemCard({ item }: Props) {
+export default function ItemCard({ item, refreshItems }: Props) {
+  const handleDelete = async () => {
+    await fetch(`http://localhost:5050/api/items/${item._id}`, {
+      method: "DELETE",
+    });
+    refreshItems();
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-md p-4 border border-gray-200 flex flex-col">
+    <div className="relative bg-white rounded-xl shadow-md p-4 border border-gray-200 flex flex-col">
+
+      <button
+        onClick={handleDelete}
+        className="absolute top-2 right-2 p-1 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-100 transition-colors"
+      >
+        Delete
+      </button>
+
       <h3 className="font-semibold">{item.name}</h3>
       <p className="text-sm text-gray-600">Category: {item.category}</p>
       {item.brand && <p className="text-sm text-gray-600">Brand: {item.brand}</p>}

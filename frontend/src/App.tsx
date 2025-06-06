@@ -16,7 +16,7 @@ function App() {
       });
   }, []);
 
-  const handleAdd = async () => {
+  const refreshItems = async () => {
     const res = await fetch("http://localhost:5050/api/items");
     const data = await res.json();
     setItems(data);
@@ -25,8 +25,8 @@ function App() {
   return (
     <div className="p-6 max-w-7xl mx-auto">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <ItemFormCard onAdd={handleAdd} />
-        {loading ? <p>Loading...</p> : <ItemList items={items} />}
+        <ItemFormCard refreshItems={refreshItems} />
+        {loading ? <p>Loading...</p> : <ItemList items={items} refreshItems={refreshItems} />}
       </div>
     </div>
   );

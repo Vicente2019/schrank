@@ -12,10 +12,10 @@ type NewItem = {
 };
 
 type Props = {
-  onAdd: () => void;
+  refreshItems: () => void;
 };
 
-export default function ItemForm({ onAdd }: Props) {
+export default function ItemForm({ refreshItems }: Props) {
   const [formData, setFormData] = useState<NewItem>({
     name: '',
     category: 'top',
@@ -61,7 +61,7 @@ export default function ItemForm({ onAdd }: Props) {
         brand: '',
       });
 
-      onAdd();
+      refreshItems();
     } catch (err) {
       console.error(err);
       alert("Error adding item");
