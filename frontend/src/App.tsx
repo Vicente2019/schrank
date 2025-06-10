@@ -1,35 +1,13 @@
-import { useEffect, useState } from "react";
-import ItemList from "./components/ItemList";
-import { Item } from "./types/item";
-import ItemFormCard from "./components/ItemFormCard";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import ItemsPage from "./pages/ItemsPage";
 
-function App() {
-  const [items, setItems] = useState<Item[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("http://localhost:5050/api/items")
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-        setLoading(false);
-      });
-  }, []);
-
-  const refreshItems = async () => {
-    const res = await fetch("http://localhost:5050/api/items");
-    const data = await res.json();
-    setItems(data);
-  };
-
+export default function App() {
   return (
-    <div className="p-6 max-w-7xl mx-auto">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <ItemFormCard refreshItems={refreshItems} />
-        {loading ? <p>Loading...</p> : <ItemList items={items} refreshItems={refreshItems} />}
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Navigate to="/items" replace />} />
+        <Route path="/items" element={<ItemsPage />} />
+      </Routes>
+    </Router>
   );
 }
-
-export default App;
