@@ -1,7 +1,6 @@
-if (process.env.NODE_ENV !== "production") {
-  require('dotenv').config();
-}
-
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 import express from 'express';
 import itemRoutes from "./routes/items";
 import outfitRoutes from "./routes/outfits";

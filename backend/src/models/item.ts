@@ -11,7 +11,12 @@ const itemSchema = new mongoose.Schema({
         required: true,
     },
     color: String,
-    imageUrl: String,
+    images: [
+        {
+            url: String,
+            filename: String
+        }
+    ],
     tags: {
         type: [String],
         default: [],

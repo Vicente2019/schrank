@@ -35,17 +35,27 @@ export default function ItemForm({ refreshItems }: Props) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const payload = {
-      ...formData,
-      price: formData.price ? parseFloat(formData.price) : undefined,
-      tags: formData.tags.split(',').map(tag => tag.trim()).filter(Boolean),
-    };
+    const form = new FormData();
+
+    form.append("name", formData.name);
+    form.append("category", formData.category);
+    if(formData.color) form.append("color", formData.color);
+    form.append("tags", formData.tags);
+    if(formData.price) form.append("price", formData.price);
+    form.append("size", formData.size);
+    if(formData.brand) form.append("brand", formData.brand);
+
+    const fileInput = (e.currentTarget as HTMLFormElement).querySelector('input[name="image"]') as HTMLInputElement;
+    if (fileInput && fileInput.files) {
+      Array.from(fileInput.files).forEach(file => {
+        form.append("image", file);
+      });
+    }
 
     try {
       const res = await fetch("http://localhost:5050/api/items", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: form,
       });
 
       if (!res.ok) throw new Error("Failed to add item");
@@ -110,7 +120,7 @@ export default function ItemForm({ refreshItems }: Props) {
         </div>
 
         <div>
-          <input type="file" name="image"/>
+          <input type="file" name="image" multiple/>
         </div>
 
         <div>
