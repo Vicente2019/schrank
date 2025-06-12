@@ -1,3 +1,7 @@
+if (process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
+
 import express from 'express';
 import itemRoutes from "./routes/items";
 import outfitRoutes from "./routes/outfits";

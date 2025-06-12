@@ -69,7 +69,7 @@ export default function ItemForm({ refreshItems }: Props) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white p-6 space-y-4 w-full">
+    <form onSubmit={handleSubmit} className="bg-white p-6 space-y-4 w-full" encType="multipart/form-data">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700">Name</label>
@@ -110,13 +110,7 @@ export default function ItemForm({ refreshItems }: Props) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700">Image URL</label>
-          <input
-            name="imageUrl"
-            value={formData.imageUrl}
-            onChange={handleChange}
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
-          />
+          <input type="file" name="image"/>
         </div>
 
         <div>
