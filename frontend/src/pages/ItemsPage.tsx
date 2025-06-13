@@ -1,7 +1,7 @@
 // pages/ItemsPage.tsx
 import { useEffect, useState } from "react";
-import ItemList from "../components/ItemList";
-import ItemFormCard from "../components/ItemFormCard";
+import ItemList from "../components/items/ItemList";
+import ItemFormCard from "../components/items/ItemFormCard";
 import { Item } from "../types/item";
 
 export default function ItemsPage() {

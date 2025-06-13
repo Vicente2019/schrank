@@ -18,7 +18,12 @@ const outfitSchema = new mongoose.Schema({
             message: "An outfit must have at least one item.",
         },
     },
-    imageUrl: String,
+    images: [
+        {
+            url: String,
+            filename: String
+        }
+    ],
     tags: {
         type: [String],
         default: [],

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Outfit } from "../types/outfit";
+import OutfitList from "../components/outfits/OutfitList";
 
 export default function OutfitsPage() {
     const [outfits, setOutfits] = useState<Outfit[]>([]);
@@ -22,7 +23,7 @@ export default function OutfitsPage() {
 
   return (
       <div>
-        outfits
+        {loading ? <p>Loading...</p> : <OutfitList outfits={outfits} refreshOutfits={refreshOutfits} />}
       </div>
     );
 }

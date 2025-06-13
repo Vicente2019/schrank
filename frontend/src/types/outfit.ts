@@ -4,9 +4,12 @@ export type Outfit = {
   _id: string;
   name: string;
   items: Item[];
-  imageUrl?: string;
+  images: {
+    url: string;
+    filename: string;
+  }[];
   tags: string[];
   notes?: string;
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt: string;
+  updatedAt: string;
 };
