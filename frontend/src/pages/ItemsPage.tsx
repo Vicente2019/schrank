@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import ItemList from "../components/items/ItemList";
 import ItemFormCard from "../components/items/ItemFormCard";
 import { Item } from "../types/item";
+import Container from "../components/ui/Container";
 
 export default function ItemsPage() {
   const [items, setItems] = useState<Item[]>([]);
@@ -24,11 +25,11 @@ export default function ItemsPage() {
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto">
+    <Container className="py-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <ItemFormCard refreshItems={refreshItems} />
         {loading ? <p>Loading...</p> : <ItemList items={items} refreshItems={refreshItems} />}
       </div>
-    </div>
+    </Container>
   );
 }
