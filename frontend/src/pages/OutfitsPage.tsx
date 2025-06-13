@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outfit } from "../types/outfit";
 import OutfitList from "../components/outfits/OutfitList";
+import Container from "../components/ui/Container";
 
 export default function OutfitsPage() {
     const [outfits, setOutfits] = useState<Outfit[]>([]);
@@ -22,8 +23,12 @@ export default function OutfitsPage() {
   };
 
   return (
-      <div>
-        {loading ? <p>Loading...</p> : <OutfitList outfits={outfits} refreshOutfits={refreshOutfits} />}
+    <Container className="py-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {loading ? (<p>Loading...</p>) : (
+          <OutfitList outfits={outfits} refreshOutfits={refreshOutfits} />
+        )}
       </div>
-    );
+    </Container>
+  );
 }

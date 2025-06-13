@@ -3,9 +3,11 @@ import { Item } from "../../types/item";
 type Props = {
   item: Item;
   refreshItems: () => void;
+  onToggleSelect?: (id: string) => void;
+  selected?: boolean;
 };
 
-export default function ItemCard({ item, refreshItems }: Props) {
+export default function ItemCard({ item, refreshItems, onToggleSelect, selected }: Props) {
   const handleDelete = async () => {
     await fetch(`http://localhost:5050/api/items/${item._id}`, {
       method: "DELETE",
@@ -14,10 +16,17 @@ export default function ItemCard({ item, refreshItems }: Props) {
   };
 
   return (
-    <div className="relative bg-white rounded-xl shadow-md p-4 border border-gray-200 flex flex-col">
-
+    <div
+      onClick={() => onToggleSelect?.(item._id)}
+      className={`relative rounded-xl border p-4 shadow-sm flex flex-col transition cursor-pointer ${
+        selected ? "ring-2 ring-blue-500 bg-blue-50" : "bg-white"
+      }`}
+    >
       <button
-        onClick={handleDelete}
+        onClick={(e) => {
+          e.stopPropagation();
+          handleDelete();
+        }}
         className="absolute top-2 right-2 p-1 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-100 transition-colors"
       >
         Delete
