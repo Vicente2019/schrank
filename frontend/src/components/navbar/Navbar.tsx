@@ -11,7 +11,7 @@ export default function Navbar() {
 
   return (
     <Container>
-      <nav className="mt-6 px-8 py-4 rounded-2xl bg-[#f5f3ea] flex justify-between items-center">
+      <nav className="mt-6 px-8 py-4 rounded-2xl bg-[#e8f1fa] flex justify-between items-center">
         <div className="font-bold text-gray-800">Schrank</div>
         <div className="flex gap-8">
           {links.map((link) => (
