@@ -1,4 +1,5 @@
 import { Item } from "../../types/item";
+import * as itemService from "../../services/itemService";
 
 type Props = {
   item: Item;
@@ -8,12 +9,7 @@ type Props = {
 };
 
 export default function ItemCard({ item, refreshItems, onToggleSelect, selected }: Props) {
-  const handleDelete = async () => {
-    await fetch(`http://localhost:5050/api/items/${item._id}`, {
-      method: "DELETE",
-    });
-    refreshItems();
-  };
+  const handleDelete = () => itemService.deleteItem(item._id).then(refreshItems);
 
   return (
     <div
@@ -31,7 +27,6 @@ export default function ItemCard({ item, refreshItems, onToggleSelect, selected 
       >
         Delete
       </button>
-
       <h3 className="font-semibold">{item.name}</h3>
       <p className="text-sm text-gray-600">Category: {item.category}</p>
       {item.brand && <p className="text-sm text-gray-600">Brand: {item.brand}</p>}
