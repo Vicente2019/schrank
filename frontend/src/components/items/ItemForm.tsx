@@ -4,12 +4,13 @@ type NewItem = {
   name: string;
   category: "top" | "bottom" | "shoes" | "accessory" | "outerwear" | "other";
   color?: string;
-  imageUrl?: string;
   tags: string;
   price?: string;
   size: "XS" | "S" | "M" | "L" | "XL" | "XXL" | "One Size" | "Custom" | "Unknown";
   brand?: string;
+  imageFile?: File;
 };
+
 
 type Props = {
   refreshItems: () => void;
@@ -20,7 +21,6 @@ export default function ItemForm({ refreshItems }: Props) {
     name: '',
     category: 'top',
     color: '',
-    imageUrl: '',
     tags: '',
     price: '',
     size: 'Unknown',
@@ -46,10 +46,8 @@ export default function ItemForm({ refreshItems }: Props) {
     if(formData.brand) form.append("brand", formData.brand);
 
     const fileInput = (e.currentTarget as HTMLFormElement).querySelector('input[name="image"]') as HTMLInputElement;
-    if (fileInput && fileInput.files) {
-      Array.from(fileInput.files).forEach(file => {
-        form.append("image", file);
-      });
+    if (fileInput?.files?.length === 1) {
+      form.append("image", fileInput.files[0]);
     }
 
     try {
@@ -64,7 +62,6 @@ export default function ItemForm({ refreshItems }: Props) {
         name: '',
         category: 'top',
         color: '',
-        imageUrl: '',
         tags: '',
         price: '',
         size: 'Unknown',
@@ -120,7 +117,7 @@ export default function ItemForm({ refreshItems }: Props) {
         </div>
 
         <div>
-          <input type="file" name="image" multiple/>
+          <input type="file" name="image"/>
         </div>
 
         <div>

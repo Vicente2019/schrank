@@ -17,12 +17,11 @@ export const createItem = async (req: Request, res: Response) => {
   const files = req.files as Express.Multer.File[] | undefined;
 
   if (files && files.length > 0) {
-    files.forEach((file) => {
-      item.images.push({
-        url: file.path,
-        filename: file.filename,
-      });
-    });
+    const file = files[0];
+    item.image = {
+      url: file.path,
+      filename: file.filename,
+    };
   }
   
   await item.save();

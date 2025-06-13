@@ -8,5 +8,8 @@ export type Item = {
   size?: string;
   brand?: string;
   wearCount?: number;
-  imageUrl?: string;
+  image?: {
+    url: string;
+    filename: string;
+  };
 };

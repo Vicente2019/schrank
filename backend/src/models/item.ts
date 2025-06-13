@@ -11,12 +11,10 @@ const itemSchema = new mongoose.Schema({
         required: true,
     },
     color: String,
-    images: [
-        {
+    image: {
             url: String,
             filename: String
-        }
-    ],
+    },
     tags: {
         type: [String],
         default: [],

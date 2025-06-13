@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.route("/")
   .get(catchAsync(items.index))
-  .post(upload.array("image"), catchAsync(items.createItem));
+  .post(upload.single("image"), catchAsync(items.createItem));
 
 router.route("/:id")
   .get(catchAsync(items.showItem))
