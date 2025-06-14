@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import TextInput from '../../components/ui/TextInput';
+import TagsInput from './tags/TagsInput';
 
 type NewItem = {
   name: string;
   category: "top" | "bottom" | "shoes" | "accessory" | "outerwear" | "other";
   color?: string;
-  tags: string;
   price?: string;
   size: "XS" | "S" | "M" | "L" | "XL" | "XXL" | "One Size" | "Custom" | "Unknown";
   brand?: string;
@@ -21,11 +21,11 @@ export default function ItemForm({ refreshItems }: Props) {
     name: '',
     category: 'top',
     color: '',
-    tags: '',
     price: '',
     size: 'Unknown',
     brand: ''
   });
+  const [tags, setTags] = useState<string[]>([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -39,10 +39,10 @@ export default function ItemForm({ refreshItems }: Props) {
     form.append("name", formData.name);
     form.append("category", formData.category);
     if (formData.color) form.append("color", formData.color);
-    form.append("tags", formData.tags);
     if (formData.price) form.append("price", formData.price);
     form.append("size", formData.size);
     if (formData.brand) form.append("brand", formData.brand);
+    tags.forEach(tag => form.append("tags", tag));
 
     const fileInput = (e.currentTarget as HTMLFormElement).querySelector('input[name="image"]') as HTMLInputElement;
     if (fileInput?.files?.length === 1) {
@@ -61,12 +61,11 @@ export default function ItemForm({ refreshItems }: Props) {
         name: '',
         category: 'top',
         color: '',
-        tags: '',
         price: '',
         size: 'Unknown',
         brand: '',
       });
-
+      setTags([]);
       refreshItems();
     } catch (err) {
       console.error(err);
@@ -100,25 +99,26 @@ export default function ItemForm({ refreshItems }: Props) {
             <option>other</option>
           </select>
         </div>
-        <TextInput label="Color"
-          name="color"
-          value={formData.color ?? ''}
-          onChange={handleChange}
+        <TextInput 
+          label="Color" 
+          name="color" 
+          value={formData.color ?? ''} 
+          onChange={handleChange} 
         />
         <div>
           <input type="file" name="image" />
         </div>
-        <TextInput
-          label="Tags (comma-separated)"
-          name="tags"
-          value={formData.tags}
-          onChange={handleChange}
+
+        <TagsInput
+          initialTags={tags}
+          onChange={setTags}
         />
+
         <TextInput
           label="Price"
           name="price"
           type="number"
-          value={formData.price ?? '0'}
+          value={formData.price ?? ''}
           onChange={handleChange}
         />
         <div>
@@ -147,6 +147,7 @@ export default function ItemForm({ refreshItems }: Props) {
           onChange={handleChange}
         />
       </div>
+
       <div className="pt-4">
         <button
           type="submit"
