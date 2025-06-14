@@ -19,7 +19,7 @@ export default function ItemsPage() {
     <Container className="py-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <ItemFormCard refreshItems={refreshItems} />
-        <ItemList items={items} refreshItems={refreshItems} />
+        <ItemList items={items} refreshItems={refreshItems} deleteEnabled={true} />
       </div>
     </Container>
   );

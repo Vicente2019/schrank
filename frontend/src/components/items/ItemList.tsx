@@ -6,9 +6,16 @@ type Props = {
   refreshItems?: () => void;
   onClick?: (item: Item) => void;
   selectedIds?: string[];
+  deleteEnabled?: boolean;
 };
 
-export default function ItemList({ items, refreshItems, onClick, selectedIds = [] }: Props) {
+export default function ItemList({ 
+  items, 
+  refreshItems, 
+  onClick, 
+  selectedIds = [],
+  deleteEnabled = false,
+ }: Props) {
   return (
     <>
       {items.map((item) => (
@@ -18,6 +25,7 @@ export default function ItemList({ items, refreshItems, onClick, selectedIds = [
           refreshItems={refreshItems}
           onClick={onClick}
           selected={selectedIds.includes(item._id)}
+          deleteEnabled={deleteEnabled}
         />
       ))}
     </>
