@@ -10,6 +10,7 @@ export const getOutfits = async (): Promise<Outfit[]> => {
 
 export const createOutfit = async (data: {
   name: string;
+  notes: string;
   items: string[];
 }): Promise<Outfit> => {
   const res = await fetch(BASE_URL, {

@@ -11,11 +11,11 @@ export default function ItemsPage() {
   const [items, setItems] = useState<Item[]>([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    itemService.getItems().then(setItems).catch(console.error);
-  }, []);
-
   const refreshItems = () => itemService.getItems().then(setItems).catch(console.error);
+
+  useEffect(() => {
+    refreshItems();
+  }, []);
 
   const handleItemClick = (item: Item) => {
     navigate(`/items/${item._id}`);
@@ -28,8 +28,8 @@ export default function ItemsPage() {
         <ItemList 
           items={items} 
           refreshItems={refreshItems} 
-          deleteEnabled={true}
           onClick={handleItemClick}
+          deleteEnabled
         />
       </div>
     </Container>

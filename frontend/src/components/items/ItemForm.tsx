@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import TextInput from '../../components/ui/TextInput';
 
 type NewItem = {
   name: string;
@@ -10,7 +11,6 @@ type NewItem = {
   brand?: string;
   imageFile?: File;
 };
-
 
 type Props = {
   refreshItems: () => void;
@@ -36,14 +36,13 @@ export default function ItemForm({ refreshItems }: Props) {
     e.preventDefault();
 
     const form = new FormData();
-
     form.append("name", formData.name);
     form.append("category", formData.category);
-    if(formData.color) form.append("color", formData.color);
+    if (formData.color) form.append("color", formData.color);
     form.append("tags", formData.tags);
-    if(formData.price) form.append("price", formData.price);
+    if (formData.price) form.append("price", formData.price);
     form.append("size", formData.size);
-    if(formData.brand) form.append("brand", formData.brand);
+    if (formData.brand) form.append("brand", formData.brand);
 
     const fileInput = (e.currentTarget as HTMLFormElement).querySelector('input[name="image"]') as HTMLInputElement;
     if (fileInput?.files?.length === 1) {
@@ -78,17 +77,13 @@ export default function ItemForm({ refreshItems }: Props) {
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 space-y-4 w-full" encType="multipart/form-data">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Name</label>
-          <input
-            name="name"
-            required
-            value={formData.name}
-            onChange={handleChange}
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2 bg-neutral-50"
-          />
-        </div>
-
+        <TextInput
+          label="Name"
+          name="name"
+          required
+          value={formData.name}
+          onChange={handleChange}
+        />
         <div>
           <label className="block text-sm font-medium text-gray-700">Category</label>
           <select
@@ -105,42 +100,27 @@ export default function ItemForm({ refreshItems }: Props) {
             <option>other</option>
           </select>
         </div>
-
+        <TextInput label="Color"
+          name="color"
+          value={formData.color ?? ''}
+          onChange={handleChange}
+        />
         <div>
-          <label className="block text-sm font-medium text-gray-700">Color</label>
-          <input
-            name="color"
-            value={formData.color}
-            onChange={handleChange}
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
-          />
+          <input type="file" name="image" />
         </div>
-
-        <div>
-          <input type="file" name="image"/>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Tags (comma-separated)</label>
-          <input
-            name="tags"
-            value={formData.tags}
-            onChange={handleChange}
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Price</label>
-          <input
-            name="price"
-            type="number"
-            value={formData.price}
-            onChange={handleChange}
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
-          />
-        </div>
-
+        <TextInput
+          label="Tags (comma-separated)"
+          name="tags"
+          value={formData.tags}
+          onChange={handleChange}
+        />
+        <TextInput
+          label="Price"
+          name="price"
+          type="number"
+          value={formData.price ?? '0'}
+          onChange={handleChange}
+        />
         <div>
           <label className="block text-sm font-medium text-gray-700">Size</label>
           <select
@@ -160,18 +140,13 @@ export default function ItemForm({ refreshItems }: Props) {
             <option>Unknown</option>
           </select>
         </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Brand</label>
-          <input
-            name="brand"
-            value={formData.brand}
-            onChange={handleChange}
-            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring-2"
-          />
-        </div>
+        <TextInput
+          label="Brand"
+          name="brand"
+          value={formData.brand ?? ''}
+          onChange={handleChange}
+        />
       </div>
-
       <div className="pt-4">
         <button
           type="submit"
