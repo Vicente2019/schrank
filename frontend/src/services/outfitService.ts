@@ -21,3 +21,9 @@ export const createOutfit = async (data: {
   if (!res.ok) throw new Error("Failed to create outfit");
   return res.json();
 };
+
+export const getOutfitById = async (id: string): Promise<Outfit> => {
+  const res = await fetch(`${BASE_URL}/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch outfit");
+  return res.json();
+};

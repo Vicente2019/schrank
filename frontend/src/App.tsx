@@ -4,6 +4,7 @@ import OutfitsPage from "./pages/OutfitsPage";
 import Navbar from "./components/navbar/Navbar";
 import NewOutfitPage from "./pages/NewOutfitPage";
 import ShowItemPage from "./pages/ShowItemPage";
+import ShowOutfitPage from "./pages/ShowOutfitPage";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
           <Route path="/items/:id" element={<ShowItemPage />} />
           <Route path="/outfits" element={<OutfitsPage />} />
           <Route path="/outfits/new" element={<NewOutfitPage />} />
+          <Route path="/outfits/:id" element={<ShowOutfitPage />} />
         </Routes>
       </main>
     </Router>
