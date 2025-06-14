@@ -85,8 +85,7 @@ export default function NewOutfitPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           <ItemList
             items={items}
-            refreshItems={() => {}}
-            onToggleSelect={handleToggleSelect}
+            onClick={(item) => handleToggleSelect(item._id)}
             selectedIds={selectedItemIds}
           />
         </div>

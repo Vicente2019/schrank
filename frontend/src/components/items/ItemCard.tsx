@@ -3,17 +3,17 @@ import * as itemService from "../../services/itemService";
 
 type Props = {
   item: Item;
-  refreshItems: () => void;
-  onToggleSelect?: (id: string) => void;
+  refreshItems?: () => void;
+  onClick?: (item: Item) => void;
   selected?: boolean;
 };
 
-export default function ItemCard({ item, refreshItems, onToggleSelect, selected }: Props) {
+export default function ItemCard({ item, refreshItems, onClick, selected }: Props) {
   const handleDelete = () => itemService.deleteItem(item._id).then(refreshItems);
 
   return (
     <div
-      onClick={() => onToggleSelect?.(item._id)}
+      onClick={() => onClick?.(item)}
       className={`relative rounded-xl border p-4 shadow-sm flex flex-col transition cursor-pointer ${
         selected ? "ring-2 ring-blue-500 bg-blue-50" : "bg-white"
       }`}
@@ -27,6 +27,7 @@ export default function ItemCard({ item, refreshItems, onToggleSelect, selected 
       >
         Delete
       </button>
+
       <h3 className="font-semibold">{item.name}</h3>
       <p className="text-sm text-gray-600">Category: {item.category}</p>
       {item.brand && <p className="text-sm text-gray-600">Brand: {item.brand}</p>}
