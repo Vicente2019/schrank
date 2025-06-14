@@ -4,22 +4,17 @@ import { useNavigate } from "react-router-dom";
 import { Item } from "../types/item";
 import Container from "../components/ui/Container";
 import ItemList from "../components/items/ItemList";
+import * as itemService from "../services/itemService";
 
 export default function NewOutfitPage() {
   const [items, setItems] = useState<Item[]>([]);
   const [selectedItemIds, setSelectedItemIds] = useState<string[]>([]);
   const [name, setName] = useState("");
   const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch("http://localhost:5050/api/items")
-      .then((res) => res.json())
-      .then((data) => {
-        setItems(data);
-        setLoading(false);
-      });
+    itemService.getItems().then(setItems).catch(console.error);
   }, []);
 
   const handleToggleSelect = (id: string) => {
@@ -87,18 +82,14 @@ export default function NewOutfitPage() {
 
       <div>
         <h2 className="text-lg font-semibold mb-2 text-gray-700">Select Items</h2>
-        {loading ? (
-          <p>Loading items...</p>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <ItemList
-              items={items}
-              refreshItems={() => {}}
-              onToggleSelect={handleToggleSelect}
-              selectedIds={selectedItemIds}
-            />
-          </div>
-        )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <ItemList
+            items={items}
+            refreshItems={() => {}}
+            onToggleSelect={handleToggleSelect}
+            selectedIds={selectedItemIds}
+          />
+        </div>
       </div>
     </Container>
   );
