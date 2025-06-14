@@ -14,10 +14,9 @@ export const showItem = async (req: Request, res: Response) => {
 
 export const createItem = async (req: Request, res: Response) => {
   const item = new Item(req.body);
-  const files = req.files as Express.Multer.File[] | undefined;
 
-  if (files && files.length > 0) {
-    const file = files[0];
+  const file = req.file as Express.Multer.File | undefined;
+  if (file) {
     item.image = {
       url: file.path,
       filename: file.filename,
@@ -25,7 +24,6 @@ export const createItem = async (req: Request, res: Response) => {
   }
   
   await item.save();
-  console.log(item);
   res.status(201).json(item);
 };
 

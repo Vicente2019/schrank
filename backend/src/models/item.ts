@@ -12,8 +12,8 @@ const itemSchema = new mongoose.Schema({
     },
     color: String,
     image: {
-            url: String,
-            filename: String
+        url: String,
+        filename: String
     },
     tags: {
         type: [String],

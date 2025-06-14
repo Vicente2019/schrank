@@ -1,5 +1,6 @@
 import { Item } from "../../types/item";
 import * as itemService from "../../services/itemService";
+import { useEffect } from "react";
 
 type Props = {
   item: Item;
@@ -27,7 +28,13 @@ export default function ItemCard({ item, refreshItems, onClick, selected }: Prop
       >
         Delete
       </button>
-
+      {item.image && (
+        <img
+          src={item.image.url}
+          alt={item.name}
+          className="w-full h-64 object-cover"
+        />
+      )}
       <h3 className="font-semibold">{item.name}</h3>
       <p className="text-sm text-gray-600">Category: {item.category}</p>
       {item.brand && <p className="text-sm text-gray-600">Brand: {item.brand}</p>}
