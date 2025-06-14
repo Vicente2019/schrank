@@ -3,6 +3,7 @@ import ItemsPage from "./pages/ItemsPage";
 import OutfitsPage from "./pages/OutfitsPage";
 import Navbar from "./components/navbar/Navbar";
 import NewOutfitPage from "./pages/NewOutfitPage";
+import ShowItemPage from "./pages/ShowItemPage";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <main className="p-4">
         <Routes>
           <Route path="/items" element={<ItemsPage />} />
+          <Route path="/items/:id" element={<ShowItemPage />} />
           <Route path="/outfits" element={<OutfitsPage />} />
           <Route path="/outfits/new" element={<NewOutfitPage />} />
         </Routes>

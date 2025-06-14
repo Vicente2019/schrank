@@ -8,6 +8,12 @@ export const getItems = async (): Promise<Item[]> => {
   return res.json();
 };
 
+export const getItemById = async (id: string) => {
+  const res = await fetch(`http://localhost:5050/api/items/${id}`);
+  if (!res.ok) throw new Error("Failed to fetch item");
+  return res.json();
+};
+
 export const createItem = async (formData: FormData): Promise<Item> => {
   const res = await fetch(BASE_URL, {
     method: "POST",
