@@ -21,9 +21,10 @@ export default function ItemCard({
   return (
     <div
       onClick={() => onClick?.(item)}
-      className={`relative rounded-xl border p-4 shadow-sm flex flex-col transition cursor-pointer ${
-        selected ? "ring-2 ring-blue-500 bg-blue-50" : "bg-white"
-      }`}
+      className={`relative rounded-xl border p-4 shadow-sm flex flex-col transition 
+        ${ selected ? "ring-2 ring-blue-500 bg-blue-50" : "bg-white" }
+        ${ onClick ? "cursor-pointer" : "" }
+      `}
     >
       {deleteEnabled && (
         <button
