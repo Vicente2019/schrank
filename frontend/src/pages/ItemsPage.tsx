@@ -27,9 +27,7 @@ export default function ItemsPage() {
         <ItemFormCard refreshItems={refreshItems} />
         <ItemList 
           items={items} 
-          refreshItems={refreshItems} 
           onClick={handleItemClick}
-          deleteEnabled
         />
       </div>
     </Container>

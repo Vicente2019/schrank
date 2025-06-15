@@ -3,46 +3,44 @@ import * as itemService from "../../services/itemService";
 
 type Props = {
   item: Item;
-  refreshItems?: () => void;
   onClick?: (item: Item) => void;
   selected?: boolean;
-  deleteEnabled?: boolean;
 };
 
 export default function ItemCard({ 
-  item, 
-  refreshItems, 
+  item,  
   onClick, 
   selected, 
-  deleteEnabled,
 }: Props) {
-  const handleDelete = () => itemService.deleteItem(item._id).then(refreshItems);
 
   return (
     <div
       onClick={() => onClick?.(item)}
-      className={`relative rounded-xl border p-4 shadow-sm flex flex-col transition 
-        ${ selected ? "ring-2 ring-blue-500 bg-blue-50" : "bg-white" }
-        ${ onClick ? "cursor-pointer" : "" }
+      className={`relative rounded-xl overflow-hidden shadow-sm transition
+        border-2 border-transparent hover:border-blue-500
+        ${selected ? "ring-2 ring-blue-500 bg-blue-50" : ""}
+        ${onClick ? "cursor-pointer" : ""}
+        group
       `}
+      style={{
+        backgroundImage: `url(${item.image?.url})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '16rem',
+      }}
     >
-      {deleteEnabled && (
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleDelete();
-          }}
-          className="absolute top-2 right-2 p-1 rounded-full text-gray-400 hover:text-red-500 hover:bg-red-100 transition-colors"
-        >
-          Delete
-        </button>
-      )}
-      {item.image && (
-        <img
-          src={item.image.url}
-          alt={item.name}
-          className="w-full h-64 object-cover"
-        />
+
+      {item.tags?.length > 0 && (
+        <div className="absolute bottom-2 right-2 flex flex-wrap justify-end gap-1 z-10">
+          {item.tags.map((tag, idx) => (
+            <span
+              key={idx}
+              className="bg-blue-200 text-blue-800 text-xs px-2 py-1 rounded-full backdrop-blur-sm bg-opacity-80"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       )}
     </div>
   );

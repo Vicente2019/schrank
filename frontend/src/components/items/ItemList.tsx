@@ -3,18 +3,14 @@ import ItemCard from "./ItemCard";
 
 type Props = {
   items: Item[];
-  refreshItems?: () => void;
   onClick?: (item: Item) => void;
   selectedIds?: string[];
-  deleteEnabled?: boolean;
 };
 
 export default function ItemList({ 
   items, 
-  refreshItems, 
   onClick, 
   selectedIds = [],
-  deleteEnabled = false,
  }: Props) {
   return (
     <>
@@ -22,10 +18,8 @@ export default function ItemList({
         <ItemCard
           key={item._id}
           item={item}
-          refreshItems={refreshItems}
           onClick={onClick}
           selected={selectedIds.includes(item._id)}
-          deleteEnabled={deleteEnabled}
         />
       ))}
     </>
