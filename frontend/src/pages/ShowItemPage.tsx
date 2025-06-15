@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Item } from "../types/item";
 import * as itemService from "../services/itemService";
 import Container from "../components/ui/Container";
@@ -7,6 +7,7 @@ import Container from "../components/ui/Container";
 export default function ShowItemPage() {
   const { id } = useParams<{ id: string }>();
   const [item, setItem] = useState<Item | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -15,6 +16,8 @@ export default function ShowItemPage() {
         .catch((err) => console.error(err))
     }
   }, [id]);
+
+  const handleDelete = () => id && itemService.deleteItem(id).then(() => navigate("/items")).catch(err => { console.error(err);});
 
   if (!item) return <p className="text-center mt-4">Item not found.</p>;
 
@@ -39,6 +42,14 @@ export default function ShowItemPage() {
         {item.tags?.length > 0 && (
           <p><strong>Tags:</strong> {item.tags.map((tag) => `#${tag}`).join(" ")}</p>
         )}
+      </div>
+      <div className="mt-6">
+        <button
+          onClick={handleDelete}
+          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+        >
+          Delete Item
+        </button>
       </div>
     </Container>
   );
