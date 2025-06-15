@@ -1,5 +1,4 @@
 import { Item } from "../../types/item";
-import * as itemService from "../../services/itemService";
 
 type Props = {
   item: Item;
