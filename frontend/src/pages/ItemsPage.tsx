@@ -24,7 +24,7 @@ export default function ItemsPage() {
     <Container className="py-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
         <button 
-          className="text-blue-500 text-xl font-semibold"
+          className="text-[#534d56] text-xl font-semibold bg-[#decdf5]"
           onClick={(e) => {
             e.stopPropagation();
             navigate("/items/new");

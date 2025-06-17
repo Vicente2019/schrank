@@ -20,7 +20,7 @@ export default function Navbar() {
               to={link.to}
               className={`font-medium transition ${
                 location.pathname === link.to
-                  ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                  ? "text-blue-800 border-b-2 border-blue-800 pb-1"
                   : "text-[#656176] hover:text-blue-500"
                 }`}
             >

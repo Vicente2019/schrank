@@ -16,8 +16,8 @@ export default function ItemCard({
     <div
       onClick={() => onClick?.(item)}
       className={`relative rounded-xl overflow-hidden shadow-sm transition
-        border-2 border-transparent hover:border-blue-500
-        ${selected ? "ring-2 ring-blue-500 bg-blue-50" : ""}
+        border-2 border-transparent hover:border-blue-600
+        ${selected ? "ring-2 ring-blue-600" : ""}
         ${onClick ? "cursor-pointer" : ""}
         group
       `}
@@ -34,7 +34,7 @@ export default function ItemCard({
           {item.tags.map((tag, idx) => (
             <span
               key={idx}
-              className="bg-blue-200 text-blue-800 text-xs px-2 py-1 rounded-full backdrop-blur-sm bg-opacity-80"
+              className="bg-[#f8f1ff] text-blue-800 border border-[#decdf5] text-xs px-2 py-1 rounded-full bg-opacity-80"
             >
               {tag}
             </span>
