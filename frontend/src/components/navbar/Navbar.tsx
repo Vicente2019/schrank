@@ -11,16 +11,18 @@ export default function Navbar() {
 
   return (
     <Container>
-      <nav className="mt-6 px-8 py-4 rounded-2xl bg-[#e8f1fa] flex justify-between items-center">
-        <div className="font-bold text-gray-800">Schrank</div>
+      <nav className="mt-6 px-8 py-4 rounded-2xl bg-[#f8f1ff] border-2 border-[#decdf5] flex justify-between items-center">
+        <div className="font-bold text-xl text-[#656176]">Schrank</div>
         <div className="flex gap-8">
           {links.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              className={`text-gray-800 font-medium hover:text-blue-600 transition ${
-                location.pathname === link.to ? "underline" : ""
-              }`}
+              className={`font-medium transition ${
+                location.pathname === link.to
+                  ? "text-blue-600 border-b-2 border-blue-600 pb-1"
+                  : "text-[#656176] hover:text-blue-500"
+                }`}
             >
               {link.label}
             </Link>
