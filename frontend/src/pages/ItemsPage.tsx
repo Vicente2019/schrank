@@ -1,7 +1,6 @@
 // pages/ItemsPage.tsx
 import { useEffect, useState } from "react";
 import ItemList from "../components/items/ItemList";
-import ItemFormCard from "../components/items/ItemFormCard";
 import { Item } from "../types/item";
 import Container from "../components/ui/Container";
 import * as itemService from "../services/itemService";
@@ -24,7 +23,14 @@ export default function ItemsPage() {
   return (
     <Container className="py-6">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <ItemFormCard refreshItems={refreshItems} />
+        <button 
+          className="text-blue-500 text-xl font-semibold"
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate("/items/new");
+          }}>
+          New Item
+        </button>
         <ItemList 
           items={items} 
           onClick={handleItemClick}

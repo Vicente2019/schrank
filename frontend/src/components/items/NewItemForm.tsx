@@ -1,0 +1,126 @@
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import TextInput from "../ui/TextInput";
+import TagsInput from "./tags/TagsInput";
+import SelectInput from "../ui/SelectInput";
+
+type NewItem = {
+  name: string;
+  category: "top" | "bottom" | "shoes" | "accessory" | "outerwear" | "other";
+  color?: string;
+  price?: string;
+  size: "XS" | "S" | "M" | "L" | "XL" | "XXL" | "One Size" | "Custom" | "Unknown";
+  brand?: string;
+};
+
+export default function NewItemForm() {
+  const [formData, setFormData] = useState<NewItem>({
+    name: "",
+    category: "top",
+    color: "",
+    price: "",
+    size: "Unknown",
+    brand: "",
+  });
+
+  const [tags, setTags] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const form = new FormData();
+    form.append("name", formData.name);
+    form.append("category", formData.category);
+    if (formData.color) form.append("color", formData.color);
+    if (formData.price) form.append("price", formData.price);
+    form.append("size", formData.size);
+    if (formData.brand) form.append("brand", formData.brand);
+    tags.forEach((tag) => form.append("tags", tag));
+
+    if (fileInputRef.current?.files?.[0]) {
+      form.append("image", fileInputRef.current.files[0]);
+    }
+
+    try {
+      const res = await fetch("http://localhost:5050/api/items", {
+        method: "POST",
+        body: form,
+      });
+
+      if (!res.ok) throw new Error("Failed to add item");
+
+      setFormData({
+        name: "",
+        category: "top",
+        color: "",
+        price: "",
+        size: "Unknown",
+        brand: "",
+      });
+      setTags([]);
+      navigate("/items");
+
+    } catch (err) {
+      console.error(err);
+      alert("Error adding item");
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white space-y-4 w-full" encType="multipart/form-data">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <TextInput
+          label="Name"
+          name="name"
+          required
+          value={formData.name}
+          onChange={handleChange}
+        />
+        <SelectInput
+          label="Category"
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          options={["top", "bottom", "shoes", "accessory", "outerwear", "other"]}
+        />
+        <TextInput label="Color" name="color" value={formData.color ?? ""} onChange={handleChange} />
+        <div>
+          <label className="block text-sm font-medium text-gray-700">Image</label>
+          <input type="file" name="image" ref={fileInputRef} accept="image/*" />
+        </div>
+        <TagsInput initialTags={tags} onChange={setTags} />
+        <TextInput
+          label="Price"
+          name="price"
+          type="number"
+          value={formData.price ?? ""}
+          onChange={handleChange}
+        />
+        <SelectInput
+          label="Size"
+          name="size"
+          value={formData.size}
+          onChange={handleChange}
+          options={["XS", "S", "M", "L", "XL", "XXL", "One Size", "Custom", "Unknown"]}
+        />
+        <TextInput label="Brand" name="brand" value={formData.brand ?? ""} onChange={handleChange} />
+      </div>
+
+      <div className="pt-4">
+        <button
+          type="submit"
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition"
+        >
+          Add Item
+        </button>
+      </div>
+    </form>
+  );
+}
