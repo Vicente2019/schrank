@@ -10,7 +10,7 @@ export default function Tag({ removeTag, tag }: Props) {
   return (
     <span
       key={tag.index}
-      className="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm flex items-center"
+      className="bg-[#f8f1ff] text-blue-800 border border-[#decdf5] px-2 py-1 rounded-full text-sm flex items-center"
     >
       {tag.value}
     <button
