@@ -10,7 +10,7 @@ export default function Navbar() {
   const location = useLocation();
 
   return (
-    <Container>
+    <Container className="px-8">
       <nav className="mt-6 px-8 py-4 rounded-2xl bg-[#f8f1ff] border-2 border-[#decdf5] flex justify-between items-center">
         <div className="font-bold text-xl text-[#656176]">Schrank</div>
         <div className="flex gap-8">
