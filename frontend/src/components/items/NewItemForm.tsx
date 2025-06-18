@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../ui/TextInput";
-import TagsInput from "../ui/tags/TagsInput";
+import TagsInput from "../tags/TagsInput";
 import SelectInput from "../ui/SelectInput";
 
 type NewItem = {
@@ -95,7 +95,7 @@ export default function NewItemForm() {
           <label className="block text-sm font-medium text-gray-700">Image</label>
           <input type="file" name="image" ref={fileInputRef} accept="image/*" />
         </div>
-        <TagsInput initialTags={tags} onChange={setTags} />
+        <TagsInput label="Tags" initialTags={tags} onChange={setTags} />
         <TextInput
           label="Price"
           name="price"

@@ -2,12 +2,14 @@ import { useState } from "react";
 import Tag from "./Tag";
 
 type Props = {
+  label: string;
   initialTags?: string[];
   onChange?: (tags: string[]) => void;
   placeholder?: string;
 };
 
 export default function TagsInput({
+  label,
   initialTags = [],
   onChange,
   placeholder = "Add tag and press Enter",
@@ -35,7 +37,7 @@ export default function TagsInput({
     <div>
       <div className="flex items-center gap-3 mb-2">
         <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-          Tags
+          { label }
         </label>
         <div className="flex flex-wrap gap-2">
           {tags.map((tag, index) => (
