@@ -26,3 +26,18 @@ npm install
 # Install backend dependencies
 cd ../backend
 npm install
+```
+
+### Running the app
+
+Run both the backend and frontend:
+
+From backend/
+```bash
+npm run dev
+```
+
+From frontend/
+```bash
+npm start
+```
