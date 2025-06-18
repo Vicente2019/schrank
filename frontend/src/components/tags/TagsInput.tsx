@@ -35,17 +35,9 @@ export default function TagsInput({
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-2">
-        <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
-          { label }
-        </label>
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag, index) => (
-            <Tag removeTag={removeTag} tag={{value: tag, index: index}}/>
-          ))}
-        </div>
-      </div>
-
+      <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+        { label }
+      </label>
       <input
         type="text"
         value={tagInput}
@@ -57,8 +49,13 @@ export default function TagsInput({
           }
         }}
         placeholder={placeholder}
-        className="w-full px-3 py-2 rounded-md border border-gray-300 bg-neutral-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
+        className="w-full mt-1 px-3 py-2 rounded-md border border-gray-300 bg-neutral-50 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-300"
       />
+      <div className="flex flex-wrap gap-2 mt-3">
+        {tags.map((tag, index) => (
+          <Tag removeTag={removeTag} tag={{value: tag, index: index}}/>
+        ))}
+      </div>
     </div>
   );
 }
