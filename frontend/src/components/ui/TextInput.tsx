@@ -7,6 +7,7 @@ type TextInputProps = {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   placeholder?: string;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   type?: string;
 };
 
@@ -17,6 +18,7 @@ export default function TextInput({
   onChange,
   required = false,
   placeholder,
+  onKeyDown,
   type = "text",
 }: TextInputProps) {
   return (
@@ -28,6 +30,7 @@ export default function TextInput({
         type={type}
         value={value}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         required={required}
         placeholder={placeholder}
         className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2 bg-neutral-50 text-gray-800 shadow-sm focus:ring-2 focus:ring-blue-300"

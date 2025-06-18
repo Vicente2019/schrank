@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TextInput from "../ui/TextInput";
-import TagsInput from "./tags/TagsInput";
+import TagsInput from "../ui/tags/TagsInput";
 import SelectInput from "../ui/SelectInput";
 
 type NewItem = {
