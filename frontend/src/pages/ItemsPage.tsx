@@ -24,10 +24,10 @@ export default function ItemsPage() {
   };
 
   return (
-    <Container className="py-6 grid lg:grid-cols-5 gap-6">
+    <Container className="py-6 grid md:grid-cols-3 lg:grid-cols-4 gap-6">
       <div className="space-y-4">
         <button 
-          className="text-[#534d56] text-xl font-semibold bg-[#decdf5]"
+          className="rounded-2xl text-[#534d56] text-xl font-semibold bg-[#decdf5] hover:bg-[#c6b4e3] w-full py-2"
           onClick={(e) => {
             e.stopPropagation();
             navigate("/items/new");
@@ -36,10 +36,12 @@ export default function ItemsPage() {
         </button>
         <Filter selectedTags={filterTags} onChange={setFilterTags} />
       </div>
-      <ItemList 
-        items={filterByTags(items, filterTags)} 
-        onClick={handleItemClick}
-      />
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 md:col-span-2 lg:col-span-3 gap-6">
+        <ItemList 
+          items={filterByTags(items, filterTags)} 
+          onClick={handleItemClick}
+        />
+      </div>
     </Container>
   );
 }
