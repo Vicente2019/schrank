@@ -14,7 +14,7 @@ router.route("/")
 
 router.route("/:id")
   .get(catchAsync(items.showItem))
-  .put(catchAsync(items.updateItem))
+  .patch(catchAsync(items.updateItem))
   .delete(catchAsync(items.deleteItem));
 
 export default router;
