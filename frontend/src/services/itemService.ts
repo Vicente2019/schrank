@@ -29,3 +29,12 @@ export const deleteItem = async (id: string): Promise<void> => {
   });
   if (!res.ok) throw new Error("Failed to delete item");
 };
+
+export const updateItem = async (formData: FormData, itemId: string): Promise<Item> => {
+  const res = await fetch(`http://localhost:5050/api/items/${itemId}`, {
+    method: "PATCH",
+    body: formData,
+  });
+  if (!res.ok) throw new Error("Failed to update item");
+  return await res.json();
+}

@@ -56,7 +56,6 @@ export default function ItemForm({
     if (fileInputRef.current?.files?.[0]) {
       form.append("image", fileInputRef.current.files[0]);
     }
-
     await onSubmit(form);
   };
 

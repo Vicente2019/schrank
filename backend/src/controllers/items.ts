@@ -28,10 +28,22 @@ export const createItem = async (req: Request, res: Response) => {
 };
 
 export const updateItem = async (req: Request, res: Response) => {
+  console.log("id:", req.params.id);
+  console.log("body:", req.body);
+
+  const file = req.file as Express.Multer.File | undefined;
+  if (file) {
+    req.body.image = {
+      url: file.path,
+      filename: file.filename,
+    };
+  }
+
   const item = await Item.findByIdAndUpdate(req.params.id, req.body, { new: true });
   if (!item) return res.status(404).json({ error: "Item not found" });
   res.json(item);
 };
+
 
 export const deleteItem = async (req: Request, res: Response) => {
   const item = await Item.findByIdAndDelete(req.params.id);

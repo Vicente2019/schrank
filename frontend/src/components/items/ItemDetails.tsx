@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Item } from "../../types/item";
 import Tag from "../tags/Tag";
 import ItemForm from "./ItemForm";
+import { updateItem } from "../../services/itemService";
 
 type Props = {
   item: Item;
@@ -13,22 +14,14 @@ export default function ItemDetails({ item, onDelete, onUpdate }: Props) {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleUpdate = async (formData: FormData) => {
-    try {
-      const res = await fetch(`http://localhost:5050/api/items/${item._id}`, {
-        method: "PATCH",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Failed to update item");
-
-      const updated = await res.json();
-      onUpdate(updated);
-      setIsEditing(false);
-    } catch (err) {
-      console.error(err);
-      alert("Error updating item");
-    }
-  };
+    console.log(formData.get("price"));
+    updateItem(formData, item._id)
+      .then((updated: Item) => {
+        onUpdate(updated);
+        setIsEditing(false);
+      })    
+      .catch(console.error);
+  }
 
   return (
     <div>

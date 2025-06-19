@@ -14,7 +14,7 @@ router.route("/")
 
 router.route("/:id")
   .get(catchAsync(items.showItem))
-  .patch(catchAsync(items.updateItem))
+  .patch(upload.single("image"), catchAsync(items.updateItem))
   .delete(catchAsync(items.deleteItem));
 
 export default router;
