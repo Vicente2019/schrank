@@ -18,11 +18,11 @@ export default function Navbar() {
             <Link
               key={link.to}
               to={link.to}
-              className={`font-medium transition ${
+              className={`font-medium transition border-b-2 ${
                 location.pathname === link.to
-                  ? "text-blue-800 border-b-2 border-blue-800 pb-1"
-                  : "text-[#656176] hover:text-blue-500"
-                }`}
+                  ? "text-blue-800 border-blue-800"
+                  : "text-[#656176] hover:text-blue-500 border-transparent"
+              } pb-1`}
             >
               {link.label}
             </Link>
