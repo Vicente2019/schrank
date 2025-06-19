@@ -24,15 +24,13 @@ export default function ShowItemPage() {
 
   return (
     <Container className="py-6 max-w-3xl grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-      <div>
-        {item.image && (
-          <img
-            src={item.image.url}
-            alt={item.name}
-            className="w-full rounded-lg shadow-md object-cover mb-4"
-          />
-        )}
-      </div>
+      {item.image && (
+        <img
+          src={item.image.url}
+          alt={item.name}
+          className="w-full rounded-lg shadow-md object-cover mb-4"
+        />
+      )}
       <ItemDetails item={item} onDelete={handleDelete}/>
     </Container>
   );
