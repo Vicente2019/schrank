@@ -31,7 +31,11 @@ export default function ShowItemPage() {
           className="w-full rounded-lg shadow-md object-cover mb-4"
         />
       )}
-      <ItemDetails item={item} onDelete={handleDelete}/>
+      <ItemDetails 
+        item={item} 
+        onDelete={handleDelete} 
+        onUpdate={(updated) => setItem(updated)}
+      />
     </Container>
   );
 }

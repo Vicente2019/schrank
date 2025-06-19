@@ -1,31 +1,40 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import TextInput from "../ui/TextInput";
 import TagsInput from "../tags/TagsInput";
 import SelectInput from "../ui/SelectInput";
+import { Item } from "../../types/item";
+import { Category, isValidCategory, isValidSize, Size } from "../../utils/typeGuards";
 
 type NewItem = {
   name: string;
-  category: "top" | "bottom" | "shoes" | "accessory" | "outerwear" | "other";
+  category: Category;
   color?: string;
   price?: string;
-  size: "XS" | "S" | "M" | "L" | "XL" | "XXL" | "One Size" | "Custom" | "Unknown";
+  size: Size;
   brand?: string;
 };
 
-export default function NewItemForm() {
-  const [formData, setFormData] = useState<NewItem>({
-    name: "",
-    category: "top",
-    color: "",
-    price: "",
-    size: "Unknown",
-    brand: "",
-  });
+type Props = {
+  initalData?: Partial<Item>;
+  onSubmit: (form: FormData) => Promise<void>;
+  submitLabel?: string;
+}
 
-  const [tags, setTags] = useState<string[]>([]);
+export default function ItemForm({ 
+  initalData, 
+  onSubmit, 
+  submitLabel="Save Item" }: Props
+) {
+  const [formData, setFormData] = useState<NewItem>({
+    name: initalData?.name ?? "",
+    category: isValidCategory(initalData?.category) ? initalData!.category : "top",
+    color: initalData?.color ?? "",
+    price: initalData?.price?.toString() ?? "",
+    size: isValidSize(initalData?.size) ? initalData!.size : "Unknown",
+    brand: initalData?.brand ?? "",
+  });
+  const [tags, setTags] = useState<string[]>(initalData?.tags ?? []);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -48,29 +57,7 @@ export default function NewItemForm() {
       form.append("image", fileInputRef.current.files[0]);
     }
 
-    try {
-      const res = await fetch("http://localhost:5050/api/items", {
-        method: "POST",
-        body: form,
-      });
-
-      if (!res.ok) throw new Error("Failed to add item");
-
-      setFormData({
-        name: "",
-        category: "top",
-        color: "",
-        price: "",
-        size: "Unknown",
-        brand: "",
-      });
-      setTags([]);
-      navigate("/items");
-
-    } catch (err) {
-      console.error(err);
-      alert("Error adding item");
-    }
+    await onSubmit(form);
   };
 
   return (
@@ -112,13 +99,12 @@ export default function NewItemForm() {
         />
         <TextInput label="Brand" name="brand" value={formData.brand ?? ""} onChange={handleChange} />
       </div>
-
       <div className="pt-4">
         <button
           type="submit"
           className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-sm transition"
         >
-          Add Item
+          {submitLabel}
         </button>
       </div>
     </form>

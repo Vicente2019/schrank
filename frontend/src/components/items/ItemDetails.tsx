@@ -1,37 +1,76 @@
+import { useState } from "react";
 import { Item } from "../../types/item";
 import Tag from "../tags/Tag";
+import ItemForm from "./ItemForm";
 
 type Props = {
   item: Item;
   onDelete: () => void;
+  onUpdate: (updated: Item) => void;
 };
 
-export default function ItemDetails({ item, onDelete }: Props) {
+export default function ItemDetails({ item, onDelete, onUpdate }: Props) {
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleUpdate = async (formData: FormData) => {
+    try {
+      const res = await fetch(`http://localhost:5050/api/items/${item._id}`, {
+        method: "PATCH",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Failed to update item");
+
+      const updated = await res.json();
+      onUpdate(updated);
+      setIsEditing(false);
+    } catch (err) {
+      console.error(err);
+      alert("Error updating item");
+    }
+  };
+
   return (
     <div>
-      <h1 className="text-3xl font-bold mb-4">{item.name}</h1>
-      <div className="flex flex-wrap gap-2 mt-3">
-        {item.tags.map((tag, index) => (
-          <Tag tag={{value: tag, index: index}}/>
-        ))}
-      </div>
-      <div className="space-y-2 text-gray-700 mt-4">
-        <p><strong>Category:</strong> {item.category}</p>
-        {item.brand && <p><strong>Brand:</strong> {item.brand}</p>}
-        {item.size && <p><strong>Size:</strong> {item.size}</p>}
-        {item.color && <p><strong>Color:</strong> {item.color}</p>}
-        {item.price !== undefined && (
-          <p><strong>Price:</strong> ${item.price.toFixed(2)}</p>
-        )}
-      </div>
-      <div className="mt-6">
-        <button
-          onClick={onDelete}
-          className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
-        >
-          Delete Item
-        </button>
-      </div>
+      {isEditing ? (
+        <ItemForm
+          initalData={item}
+          onSubmit={handleUpdate}
+          submitLabel="Update Item"
+        />
+      ) : (
+        <>
+          <h1 className="text-3xl font-bold mb-4">{item.name}</h1>
+          <div className="flex flex-wrap gap-2 mt-3">
+            {item.tags.map((tag, index) => (
+              <Tag key={index} tag={{ value: tag, index }} />
+            ))}
+          </div>
+          <div className="space-y-2 text-gray-700 mt-4">
+            <p><strong>Category:</strong> {item.category}</p>
+            {item.brand && <p><strong>Brand:</strong> {item.brand}</p>}
+            {item.size && <p><strong>Size:</strong> {item.size}</p>}
+            {item.color && <p><strong>Color:</strong> {item.color}</p>}
+            {item.price !== undefined && (
+              <p><strong>Price:</strong> ${item.price.toFixed(2)}</p>
+            )}
+          </div>
+          <div className="mt-6 flex gap-2">
+            <button
+              onClick={() => setIsEditing(true)}
+              className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded"
+            >
+              Edit
+            </button>
+            <button
+              onClick={onDelete}
+              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded"
+            >
+              Delete
+            </button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
