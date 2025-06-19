@@ -26,11 +26,19 @@ export default function ItemDetails({ item, onDelete, onUpdate }: Props) {
   return (
     <div>
       {isEditing ? (
-        <ItemForm
-          initalData={item}
-          onSubmit={handleUpdate}
-          submitLabel="Update Item"
-        />
+        <div className="space-y-4">
+          <button
+            onClick={() => setIsEditing(false)}
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded"
+          >
+            Cancel
+          </button>
+          <ItemForm
+            initalData={item}
+            onSubmit={handleUpdate}
+            submitLabel="Update Item"
+          />
+        </div>
       ) : (
         <>
           <h1 className="text-3xl font-bold mb-4">{item.name}</h1>
@@ -39,7 +47,7 @@ export default function ItemDetails({ item, onDelete, onUpdate }: Props) {
               <Tag key={index} tag={{ value: tag, index }} />
             ))}
           </div>
-          <div className="space-y-2 text-gray-700 mt-4">
+          <div className="space-y-2 text-gray-700 mt-4 bg-neutral-100 rounded-xl p-4">
             <p><strong>Category:</strong> {item.category}</p>
             {item.brand && <p><strong>Brand:</strong> {item.brand}</p>}
             {item.size && <p><strong>Size:</strong> {item.size}</p>}
@@ -48,7 +56,7 @@ export default function ItemDetails({ item, onDelete, onUpdate }: Props) {
               <p><strong>Price:</strong> ${item.price.toFixed(2)}</p>
             )}
           </div>
-          <div className="mt-6 flex gap-2">
+          <div className="mt-4 flex gap-2">
             <button
               onClick={() => setIsEditing(true)}
               className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded"
