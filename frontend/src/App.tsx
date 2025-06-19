@@ -11,7 +11,7 @@ export default function App() {
   return (
     <Router>
       <Navbar />
-      <main className="p-4">
+      <main>
         <Routes>
           <Route path="/items" element={<ItemsPage />} />
           <Route path="/items/new" element={<NewItemPage />} />
