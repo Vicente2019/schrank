@@ -10,6 +10,7 @@
 
 - Node.js (v18+ recommended)
 - npm
+- Python 3 (for image background removal with `rembg`)
 
 ### Installation
 
@@ -28,12 +29,27 @@ cd ../backend
 npm install
 ```
 
+### Python Virtual Environment
+
+The backend uses rembg to remove image backgrounds before uploading to Cloudinary.
+
+From backend/
+```bash
+python3 -m venv venv
+source venv/bin/activate
+
+# Install required python packages
+pip install -r requirements.txt
+```
+
 ### Running the app
 
 Run both the backend and frontend:
 
 From backend/
 ```bash
+# Make sure the venv is activated
+source venv/bin/activate
 npm run dev
 ```
 
