@@ -6,9 +6,7 @@ import { Item } from "../../types/item";
 import { Category, isValidCategory, isValidSize, Size } from "../../utils/typeGuards";
 
 type NewItem = {
-  name: string;
   category: Category;
-  color?: string;
   price?: string;
   size: Size;
   brand?: string;
@@ -26,9 +24,7 @@ export default function ItemForm({
   submitLabel="Save Item" }: Props
 ) {
   const [formData, setFormData] = useState<NewItem>({
-    name: initalData?.name ?? "",
     category: isValidCategory(initalData?.category) ? initalData!.category : "top",
-    color: initalData?.color ?? "",
     price: initalData?.price?.toString() ?? "",
     size: isValidSize(initalData?.size) ? initalData!.size : "Unknown",
     brand: initalData?.brand ?? "",
@@ -45,11 +41,9 @@ export default function ItemForm({
     e.preventDefault();
 
     const form = new FormData();
-    form.append("name", formData.name);
-    form.append("category", formData.category);
-    if (formData.color) form.append("color", formData.color);
+    if (formData.category) form.append("category", formData.category);
     if (formData.price) form.append("price", formData.price);
-    form.append("size", formData.size);
+    if (formData.size) form.append("size", formData.size);
     if (formData.brand) form.append("brand", formData.brand);
     tags.forEach((tag) => form.append("tags", tag));
 
@@ -62,13 +56,6 @@ export default function ItemForm({
   return (
     <form onSubmit={handleSubmit} className="bg-white space-y-4 w-full" encType="multipart/form-data">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <TextInput
-          label="Name"
-          name="name"
-          required
-          value={formData.name}
-          onChange={handleChange}
-        />
         <SelectInput
           label="Category"
           name="category"
@@ -76,7 +63,6 @@ export default function ItemForm({
           onChange={handleChange}
           options={["top", "bottom", "shoes", "accessory", "outerwear", "other"]}
         />
-        <TextInput label="Color" name="color" value={formData.color ?? ""} onChange={handleChange} />
         <div>
           <label className="block text-sm font-medium text-gray-700">Image</label>
           <input type="file" name="image" ref={fileInputRef} accept="image/*" />

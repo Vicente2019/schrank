@@ -27,7 +27,6 @@ export default function ShowItemPage() {
       {item.image && (
         <img
           src={item.image.url}
-          alt={item.name}
           className="w-full rounded-lg shadow-md object-cover mb-4"
         />
       )}

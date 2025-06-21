@@ -1,19 +1,19 @@
 import mongoose from "mongoose";
 
 const itemSchema = new mongoose.Schema({
-    name: { 
-        type: String, 
-        required: true 
-    },
     category: {
         type: String,
         enum: ["top", "bottom", "shoes", "accessory", "outerwear", "other"],
-        required: true,
     },
-    color: String,
     image: {
-        url: String,
-        filename: String
+        url: {
+            type: String,
+            required: true,
+        },
+        filename: {
+            type: String,
+            required: true,
+        },
     },
     tags: {
         type: [String],

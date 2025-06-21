@@ -50,7 +50,6 @@ export default function ShowOutfitPage() {
                 {item.image ? (
                   <img
                     src={item.image.url}
-                    alt={item.name}
                     className="h-32 w-full object-cover rounded"
                   />
                 ) : (
@@ -58,7 +57,6 @@ export default function ShowOutfitPage() {
                     No Image
                   </div>
                 )}
-                <p className="mt-2 font-medium text-gray-800 truncate">{item.name}</p>
               </div>
             ))}
           </div>
