@@ -13,7 +13,7 @@ export default function ItemCard({ item,  onClick, selected }: Props) {
     <div
       onClick={() => onClick?.(item)}
       className={`relative rounded-xl overflow-hidden shadow-sm transition
-        border-2 border-transparent hover:border-blue-600
+        border-2 border-transparent hover:border-blue-800
         ${selected ? "ring-2 ring-blue-600" : ""}
         ${onClick ? "cursor-pointer" : ""}
         group
