@@ -5,6 +5,7 @@ import util from "util";
 import { cloudinary } from "../cloudinary";
 import fs from "fs/promises";
 import path from "path";
+import sharp from "sharp";
 const execAsync = util.promisify(exec);
 
 export const index = async (req: Request, res: Response) => {
@@ -28,13 +29,24 @@ export const createItem = async (req: Request, res: Response) => {
   }
 
   const inputPath = file.path;
-  const outputPath = `${file.path}-no-bg.png`;
+  const removedBgPath = `${file.path}-no-bg.png`;
+  const resizedPath = `${file.path}-resized.png`;
   const rembgPath = path.resolve(__dirname, "../../venv/bin/rembg");
 
   try {
-    await execAsync(`${rembgPath} i ${inputPath} ${outputPath}`);
+    // Remove background
+    await execAsync(`${rembgPath} i ${inputPath} ${removedBgPath}`);
 
-    const result = await cloudinary.uploader.upload(outputPath, { folder: "items" });
+    // Resize the image
+    await sharp(removedBgPath)
+      .resize(500, 500, {
+        fit: "cover",
+        position: "center",
+      })
+      .toFile(resizedPath);
+
+    // Upload to Cloudinary
+    const result = await cloudinary.uploader.upload(resizedPath, { folder: "items" });
 
     item.image = {
       url: result.secure_url,
@@ -49,7 +61,8 @@ export const createItem = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Image processing or upload failed" });
   } finally {
     fs.unlink(inputPath).catch(() => {});
-    fs.unlink(outputPath).catch(() => {});
+    fs.unlink(removedBgPath).catch(() => {});
+    fs.unlink(resizedPath).catch(() => {});
   }
 };
 
