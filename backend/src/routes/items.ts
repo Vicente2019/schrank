@@ -2,9 +2,7 @@
 import express from "express";
 import catchAsync from "../utils/catchAsync";
 import * as items from "../controllers/items";
-import multer from "multer";
-import { storage } from "../cloudinary";
-const upload = multer({ storage });
+import { upload } from "../utils/multer.config";
 
 const router = express.Router();
 

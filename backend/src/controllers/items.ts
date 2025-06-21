@@ -1,5 +1,11 @@
 import { Request, Response } from "express";
 import Item from "../models/item";
+import { exec } from "child_process";
+import util from "util";
+import { cloudinary } from "../cloudinary";
+import fs from "fs/promises";
+import path from "path";
+const execAsync = util.promisify(exec);
 
 export const index = async (req: Request, res: Response) => {
   const items = await Item.find();
@@ -14,17 +20,37 @@ export const showItem = async (req: Request, res: Response) => {
 
 export const createItem = async (req: Request, res: Response) => {
   const item = new Item(req.body);
+  const file = req.file;
 
-  const file = req.file as Express.Multer.File | undefined;
-  if (file) {
-    item.image = {
-      url: file.path,
-      filename: file.filename,
-    };
+  if (!file) {
+    await item.save();
+    return res.status(201).json(item);
   }
-  
-  await item.save();
-  res.status(201).json(item);
+
+  const inputPath = file.path;
+  const outputPath = `${file.path}-no-bg.png`;
+  const rembgPath = path.resolve(__dirname, "../../venv/bin/rembg");
+
+  try {
+    await execAsync(`${rembgPath} i ${inputPath} ${outputPath}`);
+
+    const result = await cloudinary.uploader.upload(outputPath, { folder: "items" });
+
+    item.image = {
+      url: result.secure_url,
+      filename: result.public_id,
+    };
+
+    await item.save();
+
+    res.status(201).json(item);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Image processing or upload failed" });
+  } finally {
+    fs.unlink(inputPath).catch(() => {});
+    fs.unlink(outputPath).catch(() => {});
+  }
 };
 
 export const updateItem = async (req: Request, res: Response) => {

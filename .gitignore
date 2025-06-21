@@ -13,3 +13,5 @@ dist
 
 # TS
 *.tsbuildinfo
+
+backend/venv/
