@@ -1,4 +1,5 @@
 import { Item } from "../../types/item";
+import Tag from "../tags/Tag";
 
 type Props = {
   item: Item;
@@ -6,11 +7,7 @@ type Props = {
   selected?: boolean;
 };
 
-export default function ItemCard({ 
-  item,  
-  onClick, 
-  selected, 
-}: Props) {
+export default function ItemCard({ item,  onClick, selected }: Props) {
 
   return (
     <div
@@ -28,16 +25,10 @@ export default function ItemCard({
         height: '16rem',
       }}
     >
-
       {item.tags?.length > 0 && (
         <div className="absolute bottom-2 right-2 flex flex-wrap justify-end gap-1 z-10">
-          {item.tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="bg-[#f8f1ff] text-blue-800 border border-[#decdf5] text-xs px-2 py-1 rounded-full bg-opacity-80"
-            >
-              {tag}
-            </span>
+          {item.tags.map((tag, index) => (
+            <Tag key={index} tag={{ value: tag, index }} className="bg-opacity-80"/>
           ))}
         </div>
       )}
