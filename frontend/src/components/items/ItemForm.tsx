@@ -65,7 +65,7 @@ export default function ItemForm({
         />
         <div>
           <label className="block text-sm font-medium text-gray-700">Image</label>
-          <input type="file" name="image" ref={fileInputRef} accept="image/*" />
+          <input type="file" name="image" ref={fileInputRef} accept="image/*" required/>
         </div>
         <TagsInput label="Tags" initialTags={tags} onChange={setTags} />
         <TextInput
