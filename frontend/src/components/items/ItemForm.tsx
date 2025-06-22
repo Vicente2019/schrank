@@ -13,23 +13,23 @@ type NewItem = {
 };
 
 type Props = {
-  initalData?: Partial<Item>;
+  initialData?: Partial<Item>;
   onSubmit: (form: FormData) => Promise<void>;
   submitLabel?: string;
 }
 
 export default function ItemForm({ 
-  initalData, 
+  initialData, 
   onSubmit, 
   submitLabel="Save Item" }: Props
 ) {
   const [formData, setFormData] = useState<NewItem>({
-    category: isValidCategory(initalData?.category) ? initalData!.category : "top",
-    price: initalData?.price?.toString() ?? "",
-    size: isValidSize(initalData?.size) ? initalData!.size : "Unknown",
-    brand: initalData?.brand ?? "",
+    category: isValidCategory(initialData?.category) ? initialData!.category : "top",
+    price: initialData?.price?.toString() ?? "",
+    size: isValidSize(initialData?.size) ? initialData!.size : "Unknown",
+    brand: initialData?.brand ?? "",
   });
-  const [tags, setTags] = useState<string[]>(initalData?.tags ?? []);
+  const [tags, setTags] = useState<string[]>(initialData?.tags ?? []);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
